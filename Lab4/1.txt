@@ -1,0 +1,106 @@
+#include<bits/stdc++.h>
+using namespace std;
+
+// Stores the final result 
+// of the Follow Sets 
+char calc_follow[10][100]; 
+int m = 0; 
+  
+// Stores the production rules 
+char production[10][10]; 
+char f[10], first[10]; 
+int k; 
+char ck; 
+int e;
+
+void follow(char c) 
+{ 
+    int i, j; 
+      
+    // Adding "$" to the follow 
+    // set of the start symbol 
+    if(production[0][0] == c) { 
+        f[m++] = '$'; 
+    } 
+    for(i = 0; i < 10; i++) 
+    { 
+        for(j = 2;j < 10; j++) 
+        { 
+            if(production[i][j] == c) 
+            { 
+                if(production[i][j+1] != '\0') 
+                { 
+                    // Calculate the first of the next 
+                    // Non-Terminal in the production 
+                    followfirst(production[i][j+1], i, (j+2)); 
+                } 
+                  
+                if(production[i][j+1]=='\0' && c!=production[i][0]) 
+                { 
+                    // Calculate the follow of the Non-Terminal 
+                    // in the L.H.S. of the production 
+                    follow(production[i][0]); 
+                } 
+            }  
+        } 
+    } 
+}
+
+int main()
+{
+	// Initializing the calc_follow array 
+    for(k = 0; k < count; k++) { 
+        for(kay = 0; kay < 100; kay++) { 
+            calc_follow[k][kay] = '!'; 
+        } 
+    } 
+    point1 = 0; 
+    int land = 0; 
+    for(e = 0; e < count; e++) 
+    { 
+        ck = production[e][0]; 
+        point2 = 0; 
+        xxx = 0; 
+          
+        // Checking if Follow of ck 
+        // has alredy been calculated 
+        for(kay = 0; kay <= ptr; kay++) 
+            if(ck == donee[kay]) 
+                xxx = 1; 
+                  
+        if (xxx == 1) 
+            continue; 
+        land += 1; 
+          
+        // Function call 
+        follow(ck); 
+        ptr += 1; 
+          
+        // Adding ck to the calculated list 
+        donee[ptr] = ck; 
+        printf(" Follow(%c) = { ", ck); 
+        calc_follow[point1][point2++] = ck; 
+          
+        // Printing the Follow Sets of the grammar 
+        for(i = 0 + km; i < m; i++) { 
+            int lark = 0, chk = 0; 
+            for(lark = 0; lark < point2; lark++)  
+            { 
+                if (f[i] == calc_follow[point1][lark]) 
+                { 
+                    chk = 1; 
+                    break; 
+                } 
+            } 
+            if(chk == 0) 
+            { 
+                printf("%c, ", f[i]); 
+                calc_follow[point1][point2++] = f[i]; 
+            } 
+        } 
+        printf(" }\n\n"); 
+        km = m; 
+        point1++;  
+    }
+    return 0;
+}
